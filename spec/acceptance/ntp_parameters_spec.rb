@@ -53,7 +53,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
   describe 'config' do
     it 'sets the ntp.conf location' do
       pp = "class { 'ntp': config => '/etc/antp.conf' }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file('/etc/antp.conf') do
@@ -70,7 +70,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
 
     it 'sets the ntp.conf location' do
       pp = "class { 'ntp': config_template => 'test/ntp.conf' }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file("#{config}") do
@@ -82,7 +82,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
   describe 'driftfile' do
     it 'sets the driftfile location' do
       pp = "class { 'ntp': driftfile => '/tmp/driftfile' }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file("#{config}") do
@@ -105,7 +105,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
       # Rely on a shell command instead of a file{} here to avoid loops
       # within puppet when it tries to manage /etc/ntp/keys before /etc/ntp.
       shell("mkdir -p /etc/ntp && echo '1 M AAAABBBB' >> /etc/ntp/keys")
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file("#{config}") do
@@ -125,7 +125,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
         package_name   => #{Array(packagename).inspect},
       }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     Array(packagename).each do |package|
@@ -142,7 +142,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
         panic => false,
       }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file("#{config}") do
@@ -157,7 +157,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
         panic => true,
       }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file("#{config}") do
@@ -168,7 +168,7 @@ describe "ntp class:", :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
   describe 'udlc' do
     it 'adds a udlc' do
       pp = "class { 'ntp': udlc => true }"
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe file("#{config}") do

@@ -16,7 +16,7 @@ describe 'ntp::service class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('o
     it 'sets up the service' do
       apply_manifest(%{
         class { 'ntp': }
-      }, :catch_failures => true)
+      }, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe service(servicename) do
@@ -35,7 +35,7 @@ describe 'ntp::service class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('o
         service_name   => '#{servicename}'
       }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe service(servicename) do
@@ -54,7 +54,7 @@ describe 'ntp::service class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('o
         service_name   => '#{servicename}'
       }
       EOS
-      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER)
     end
 
     describe service(servicename) do

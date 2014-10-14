@@ -5,7 +5,7 @@ describe 'ntp class:', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
     pp = "class { 'ntp': }"
 
     # Apply twice to ensure no errors the second time.
-    apply_manifest(pp, :catch_failures => true) do |r|
+    apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER) do |r|
       expect(r.stderr).not_to match(/error/i)
     end
     apply_manifest(pp, :catch_failures => true) do |r|
@@ -19,7 +19,7 @@ describe 'ntp class:', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
     it 'runs successfully' do
       pp = "class { 'ntp': service_ensure => stopped }"
 
-      apply_manifest(pp, :catch_failures => true) do |r|
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER) do |r|
         expect(r.stderr).not_to match(/error/i)
       end
     end
@@ -29,7 +29,7 @@ describe 'ntp class:', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily'
     it 'runs successfully' do
       pp = "class { 'ntp': service_ensure => running }"
 
-      apply_manifest(pp, :catch_failures => true) do |r|
+      apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER) do |r|
         expect(r.stderr).not_to match(/error/i)
       end
     end

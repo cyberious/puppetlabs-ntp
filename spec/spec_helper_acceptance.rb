@@ -1,20 +1,26 @@
 require 'beaker-rspec'
 
-UNSUPPORTED_PLATFORMS = [ 'windows', 'Darwin' ]
+UNSUPPORTED_PLATFORMS = ['windows', 'Darwin']
+
+FUTURE_PARSER = ENV['BEAKER_future_parser'] == 'true' or false
 
 unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
   # This will install the latest available package on el and deb based
   # systems fail on windows and osx, and install via gem on other *nixes
-  foss_opts = { :default_action => 'gem_install' }
+  foss_opts = {:default_action => 'gem_install'}
 
-  if default.is_pe?; then install_pe; else install_puppet( foss_opts ); end
+  if default.is_pe?
+    install_pe
+  else
+    install_puppet(foss_opts)
+  end
 
   hosts.each do |host|
     unless host.is_pe?
       on host, "/bin/echo '' > #{host['hieraconf']}"
     end
     on host, "mkdir -p #{host['distmoduledir']}"
-    on host, puppet('module install puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
+    on host, puppet('module install puppetlabs-stdlib'), {:acceptable_exit_codes => [0, 1]}
   end
 end
 

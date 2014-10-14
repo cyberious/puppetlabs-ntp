@@ -29,7 +29,7 @@ describe 'ntp::install class', :unless => UNSUPPORTED_PLATFORMS.include?(fact('o
   it 'installs the package' do
     apply_manifest(%{
       class { 'ntp': }
-    }, :catch_failures => true)
+    }, :catch_failures => true, :future_parser => FUTURE_PARSER)
   end
 
   Array(packagename).each do |package|

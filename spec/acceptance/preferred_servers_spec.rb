@@ -15,7 +15,7 @@ describe 'preferred servers', :unless => UNSUPPORTED_PLATFORMS.include?(fact('os
   EOS
 
   it 'applies cleanly' do
-    apply_manifest(pp, :catch_failures => true) do |r|
+    apply_manifest(pp, :catch_failures => true, :future_parser => FUTURE_PARSER) do |r|
       expect(r.stderr).not_to match(/error/i)
     end
   end
